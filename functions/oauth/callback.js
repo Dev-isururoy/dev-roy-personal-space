@@ -39,15 +39,27 @@ export async function onRequest(context) {
         <title>Authorizing...</title>
       </head>
       <body>
+        <p>Logging you in...</p>
         <script>
-          const message = {
-            token: '${token}',
-            provider: '${provider}'
-          };
-          window.opener.postMessage(
-            'authorization:' + provider + ':' + 'success:' + JSON.stringify(message),
-            '*'
-          );
+          (function() {
+            function receiveMessage(e) {
+              console.log("receiveMessage %o", e)
+            }
+            window.addEventListener("message", receiveMessage, false);
+
+            const message = 'authorization:' + '${provider}' + ':success:' + JSON.stringify({
+              token: '${token}',
+              provider: '${provider}'
+            });
+
+            // Send message back to main window
+            window.opener.postMessage(message, '${url.origin}');
+            
+            // Sometimes the CMS doesn't close the window automatically
+            setTimeout(() => {
+              window.close();
+            }, 1000);
+          })();
         </script>
       </body>
       </html>
