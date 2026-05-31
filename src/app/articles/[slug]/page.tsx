@@ -43,7 +43,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
           {article.title}
         </h1>
-        <div className="flex items-center justify-center space-x-2 text-sm text-muted">
+        <div className="flex items-center justify-center space-x-2 text-sm text-muted mb-10">
           <time dateTime={article.date}>
             {format(new Date(article.date), "MMMM d, yyyy")}
           </time>
@@ -52,6 +52,15 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <span>&middot;</span>
           <span>By {article.author}</span>
         </div>
+        {article.image && (
+          <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] rounded-3xl overflow-hidden mb-14 bg-muted border border-border shadow-sm">
+            <img 
+              src={article.image} 
+              alt={article.title}
+              className="object-cover w-full h-full"
+            />
+          </div>
+        )}
       </header>
 
       {/* 
