@@ -29,7 +29,6 @@ export async function onRequest(context) {
     }
 
     const token = data.access_token;
-    const provider = "github";
 
     const html = `
       <!DOCTYPE html>
@@ -43,22 +42,33 @@ export async function onRequest(context) {
         <script>
           (function() {
             function receiveMessage(e) {
-              console.log("receiveMessage %o", e)
+              // Send the token back using the exact origin of the CMS window that messaged us
+              window.opener.postMessage(
+                'authorization:github:success:{"token":"${token}","provider":"github"}',
+                e.origin
+              );
+              window.removeEventListener("message", receiveMessage, false);
+              
+              // Give it a tiny moment to send the message, then close
+              setTimeout(() => {
+                window.close();
+              }, 500);
             }
-            window.addEventListener("message", receiveMessage, false);
-
-            const message = 'authorization:' + '${provider}' + ':success:' + JSON.stringify({
-              token: '${token}',
-              provider: '${provider}'
-            });
-
-            // Send message back to main window
-            window.opener.postMessage(message, '${url.origin}');
             
-            // Sometimes the CMS doesn't close the window automatically
+            // Listen for the CMS window reaching out to us
+            window.addEventListener("message", receiveMessage, false);
+            
+            // Ping the CMS window to let it know we are ready
+            window.opener.postMessage("authorizing:github", "*");
+            
+            // Fallback: if CMS doesn't respond to our ping, just broadcast the token and close
             setTimeout(() => {
+              window.opener.postMessage(
+                'authorization:github:success:{"token":"${token}","provider":"github"}',
+                '*'
+              );
               window.close();
-            }, 1000);
+            }, 2000);
           })();
         </script>
       </body>
