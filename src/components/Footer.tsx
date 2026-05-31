@@ -7,10 +7,13 @@ export function Footer() {
   return (
     <footer className="border-t border-border mt-20 transition-colors duration-300">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex flex-col md:flex-row justify-between items-center">
-        <div className="mb-4 md:mb-0">
+        <div className="mb-4 md:mb-0 flex items-center">
           <p className="text-sm text-muted">
             &copy; {currentYear} Dev-Roy. All rights reserved.
           </p>
+          <Link href="/admin" className="text-sm text-muted/50 hover:text-foreground ml-4 transition-colors">
+            Admin
+          </Link>
         </div>
         <div className="flex space-x-6">
           <a
