@@ -1,7 +1,9 @@
 backend:
   name: github
-  repo: dev-roy/blog # IMPORTANT: Update this to your actual GitHub username/repository
+  repo: Dev-isururoy/dev-roy-personal-space
   branch: main # Branch to update
+  base_url: https://dev-roy-personal-space.pages.dev
+  auth_endpoint: /oauth/auth
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"

@@ -1,0 +1,65 @@
+export async function onRequest(context) {
+  const { env, request } = context;
+  const client_id = env.GITHUB_CLIENT_ID;
+  const client_secret = env.GITHUB_CLIENT_SECRET;
+  
+  const url = new URL(request.url);
+  const code = url.searchParams.get("code");
+  const redirect_uri = `${url.origin}/oauth/callback`;
+
+  try {
+    const response = await fetch("https://github.com/login/oauth/access_token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        client_id,
+        client_secret,
+        code,
+        redirect_uri,
+      }),
+    });
+
+    const data = await response.json();
+    
+    if (data.error) {
+      return new Response("OAuth Error: " + data.error_description, { status: 400 });
+    }
+
+    const token = data.access_token;
+    const provider = "github";
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Authorizing...</title>
+      </head>
+      <body>
+        <script>
+          const message = {
+            token: '${token}',
+            provider: '${provider}'
+          };
+          window.opener.postMessage(
+            'authorization:' + provider + ':' + 'success:' + JSON.stringify(message),
+            '*'
+          );
+        </script>
+      </body>
+      </html>
+    `;
+
+    return new Response(html, {
+      headers: {
+        "Content-Type": "text/html;charset=UTF-8",
+      },
+    });
+
+  } catch (error) {
+    return new Response("Server error: " + error.message, { status: 500 });
+  }
+}
