@@ -26,7 +26,9 @@ export function getArticleSlugs() {
 }
 
 export function getArticleBySlug(slug: string): ArticleData {
-  const realSlug = slug.replace(/\.md$/, '');
+  // Decode URL-encoded characters (e.g. Sinhala, Arabic, etc.) so the filename lookup works correctly
+  const decodedSlug = decodeURIComponent(slug);
+  const realSlug = decodedSlug.replace(/\.md$/, '');
   const fullPath = path.join(articlesDirectory, `${realSlug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { data, content } = matter(fileContents);
