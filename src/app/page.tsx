@@ -77,7 +77,7 @@ export default function Home() {
     },
     {
       label: "Email",
-      href: "mailto:contact@dev-roy.com",
+      href: "mailto:dev.isururoy@gmail.com",
       icon: <Mail className="w-5 h-5" />,
       color: "hover:text-accent",
     },

@@ -47,7 +47,7 @@ export default function AboutPage() {
         <p className="text-muted">Feel free to reach out for collaborations or just a friendly chat.</p>
         <div className="flex space-x-4">
           <a
-            href="mailto:contact@dev-roy.com"
+            href="mailto:dev.isururoy@gmail.com"
             className="flex items-center space-x-2 px-5 py-3 bg-foreground text-background rounded-full hover:bg-foreground/90 transition-colors font-medium text-sm"
           >
             <Mail className="w-4 h-4" />

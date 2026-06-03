@@ -168,7 +168,7 @@ export default function PortfolioPage() {
         </p>
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <a
-            href="mailto:contact@dev-roy.com"
+            href="mailto:dev.isururoy@gmail.com"
             className="inline-flex items-center gap-2 px-6 py-2.5 bg-foreground text-background rounded-full font-semibold text-sm hover:bg-foreground/90 transition-all"
           >
             Get in Touch

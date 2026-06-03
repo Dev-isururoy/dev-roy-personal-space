@@ -46,7 +46,7 @@ export function AuthorBox({ author = "Isuru Roy" }: { author?: string }) {
             </svg>
           </a>
           <a
-            href="mailto:contact@dev-roy.com"
+            href="mailto:dev.isururoy@gmail.com"
             className="p-2 bg-background border border-border rounded-full hover:border-accent hover:text-accent transition-colors"
           >
             <Mail className="w-4 h-4" />

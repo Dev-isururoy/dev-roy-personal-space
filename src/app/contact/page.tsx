@@ -25,10 +25,10 @@ export default function ContactPage() {
             The best way to reach me is via email. I try to reply to all messages within 24 hours.
           </p>
           <a
-            href="mailto:contact@dev-roy.com"
+            href="mailto:dev.isururoy@gmail.com"
             className="px-6 py-2 bg-foreground text-background font-medium rounded-full text-sm hover:bg-foreground/90 transition-colors"
           >
-            contact@dev-roy.com
+            dev.isururoy@gmail.com
           </a>
         </div>
 
