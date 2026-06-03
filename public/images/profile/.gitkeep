@@ -1,0 +1,2 @@
+# Place your profile photo here named: avatar.jpg
+# Then update src/app/page.tsx to use /images/profile/avatar.jpg
