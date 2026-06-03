@@ -8,6 +8,10 @@ import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { ShareButtons } from "@/components/ShareButtons";
 import { TableOfContents } from "@/components/TableOfContents";
 import { ArticleCard } from "@/components/ArticleCard";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
+import { AuthorBox } from "@/components/AuthorBox";
+import { GiscusComments } from "@/components/GiscusComments";
+import { Newsletter } from "@/components/Newsletter";
 import type { Components } from "react-markdown";
 
 export async function generateStaticParams() {
@@ -167,6 +171,9 @@ export default async function ArticlePage({
         {/* ── TABLE OF CONTENTS ── */}
         <TableOfContents headings={headings} />
 
+        {/* ── TOP AD SLOT ── */}
+        <AdPlaceholder />
+
         {/* ── CONTENT ── */}
         <div className="prose prose-lg dark:prose-invert max-w-none prose-headings:font-semibold prose-a:text-accent hover:prose-a:text-accent/80 prose-img:rounded-xl prose-headings:scroll-mt-24">
           <ReactMarkdown components={markdownComponents}>
@@ -207,6 +214,18 @@ export default async function ArticlePage({
             Back to all articles
           </Link>
         </div>
+
+        {/* ── AUTHOR BOX ── */}
+        <AuthorBox author={article.author} />
+
+        {/* ── BOTTOM AD SLOT ── */}
+        <AdPlaceholder />
+
+        {/* ── NEWSLETTER ── */}
+        <Newsletter />
+
+        {/* ── COMMENTS ── */}
+        <GiscusComments />
       </article>
 
       {/* ── RELATED ARTICLES ── */}
