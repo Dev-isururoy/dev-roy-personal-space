@@ -62,3 +62,39 @@ export function getAllCategories(): string[] {
   const categories = new Set(articles.map((article) => article.category).filter(Boolean));
   return Array.from(categories);
 }
+
+export function getAllTags(): { tag: string; count: number }[] {
+  const articles = getAllArticles();
+  const tagCount: Record<string, number> = {};
+  articles.forEach((article) => {
+    (article.tags || []).forEach((tag) => {
+      if (tag) tagCount[tag] = (tagCount[tag] || 0) + 1;
+    });
+  });
+  return Object.entries(tagCount)
+    .map(([tag, count]) => ({ tag, count }))
+    .sort((a, b) => b.count - a.count);
+}
+
+export function getRelatedArticles(currentSlug: string, category: string, limit = 3): ArticleData[] {
+  return getAllArticles()
+    .filter((a) => a.slug !== currentSlug && a.category === category)
+    .slice(0, limit);
+}
+
+export function extractHeadings(content: string): { id: string; text: string; level: number }[] {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+  const headings: { id: string; text: string; level: number }[] = [];
+  let match;
+  while ((match = headingRegex.exec(content)) !== null) {
+    const text = match[2].trim();
+    const id = text
+      .toLowerCase()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+    headings.push({ id, text, level: match[1].length });
+  }
+  return headings;
+}
